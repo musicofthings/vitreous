@@ -1,0 +1,25 @@
+name = "agent-iaas-edge"
+main = "src/index.ts"
+compatibility_date = "2026-04-14"
+
+[[durable_objects.bindings]]
+name = "AGENT_STATE"
+class_name = "AgentStateDO"
+
+[[queues.producers]]
+binding = "AGENT_QUEUE"
+queue = "agent-jobs"
+
+[[queues.consumers]]
+queue = "agent-jobs"
+max_batch_size = 10
+max_batch_timeout = 5
+
+[vars]
+AUTH_TOKEN = "replace-me"
+ORCHESTRATOR_INGEST_URL = "http://localhost:8080"
+ORCHESTRATOR_INGEST_TOKEN = "replace-me"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["AgentStateDO"]
